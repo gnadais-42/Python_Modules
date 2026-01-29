@@ -17,14 +17,15 @@ class Player:
               f"{self.get_achievements()}")
     
 def unique_set(set1, sets):
-    unique = set()
+    other_sets = set()
     for x in sets:
-        unique = unique.union(set1.difference(x))
-    return unique
+        if x is not set1:
+            other_sets = other_sets.union(x)
+    return set1.difference(other_sets)
 
 print("=== Achievement Tracker System ===\n")
 achievements = set()
-alice = Player("alice", {'test', 'first_kill', 'level_10',
+alice = Player("alice", {'first_kill', 'level_10',
                          'treasure_hunter', 'speed_demon'})
 bob = Player("bob", {'first_kill', 'level_10',
                      'boss_slayer', 'collector'})
@@ -53,9 +54,9 @@ unique = achievements.difference(not_unique)
 print(f"Rare achievements (1 player): {unique}")
 print(f"Alice vs Bob common: "
       f"{alice.get_achievements().intersection(bob.get_achievements())}")
+alice_unique = unique_set(alice.get_achievements(), sets)
 print("Alice unique: "
-      f"{alice.get_achievements().difference(bob.get_achievements(),
-                                             charlie.get_achievements())}")
-bob_unique = unique_set(bob.get_achievements(), achievements)
+      f"{alice_unique if len(alice_unique) > 0 else "None"}")
+bob_unique = unique_set(bob.get_achievements(), sets)
 print("Bob unique: "
-      f"{bob_unique if len(bob_unique) > 0 else "\{\}"}")
+      f"{bob_unique if len(bob_unique) > 0 else "None"}")
