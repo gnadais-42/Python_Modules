@@ -1,5 +1,5 @@
-import sys
 import math
+
 
 class ParseError(Exception):
     pass
@@ -8,8 +8,8 @@ class ParseError(Exception):
 def parse_coordinates(coordinates):
     parsed = coordinates.split(",")
     if len(parsed) != 3:
-        raise ParseError("Please give three coordinates " \
-        "separated by commas")
+        raise ParseError("Please give three coordinates "
+                         "separated by commas")
     final = []
     for coordinate in parsed:
         final.append(int(coordinate))
@@ -36,7 +36,7 @@ def tuple_unpacking(tup):
     x, y, z = tup
     print(f"Player at x={x}, y={y}, z={z}\n"
           f"Coordinates: X={x}, Y={y}, Z={z}")
-    
+
 
 print("=== Game Coordinate System ===\n")
 print("Position created: (10, 20, 5)")

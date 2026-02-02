@@ -9,9 +9,11 @@ scores = {
     "diana": 1950,
 }
 achievements = {
-    "alice": ["first_kill", "level_10", "boss_slayer", "speed_run", "collector"],
+    "alice": ["first_kill", "level_10", "boss_slayer",
+              "speed_run", "collector"],
     "bob": ["first_kill", "level_10", "collector"],
-    "charlie": ["first_kill", "level_10", "boss_slayer", "collector", "explorer", "veteran", "champion"],
+    "charlie": ["first_kill", "level_10", "boss_slayer",
+                "collector", "explorer", "veteran", "champion"],
     "diana": ["first_kill", "explorer"],
 }
 regions = {

@@ -66,7 +66,7 @@ while True:
 
     if i < 3:
         print(f"Event {i}: Player {player[0]} "
-        f"(level {player[1]}) {action}")
+              f"(level {player[1]}) {action}")
 print("...\n")
 
 print("=== Stream Analytics ===")
@@ -97,10 +97,3 @@ for _ in range(5):
     print(next(primes), end="")
     first = False
 print()
-    
-
-
-
-
-
-        

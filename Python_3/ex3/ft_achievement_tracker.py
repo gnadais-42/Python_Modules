@@ -2,10 +2,10 @@ class Player:
     def __init__(self, name, achievements=set()):
         self._name = name
         self._achievements = set(achievements)
-    
+
     def get_name(self):
         return self._name
-    
+
     def get_achievements(self):
         return self._achievements
 
@@ -15,13 +15,15 @@ class Player:
     def print_achievements(self):
         print(f"Player {self.get_name()} achievements: "
               f"{self.get_achievements()}")
-    
+
+
 def unique_set(set1, sets):
     other_sets = set()
     for x in sets:
         if x is not set1:
             other_sets = other_sets.union(x)
     return set1.difference(other_sets)
+
 
 print("=== Achievement Tracker System ===\n")
 achievements = set()
@@ -32,7 +34,7 @@ bob = Player("bob", {'first_kill', 'level_10',
 charlie = Player("charlie", {'level_10', 'treasure_hunter', 'boss_slayer',
                  'speed_demon', 'perfectionist'})
 sets = (alice.get_achievements(), bob.get_achievements(),
-            charlie.get_achievements())
+        charlie.get_achievements())
 for x in sets:
     achievements = achievements.union(x)
 alice.print_achievements()

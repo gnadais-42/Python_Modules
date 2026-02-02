@@ -1,5 +1,6 @@
 import sys
 
+
 def args_to_dict():
     final = dict()
     args = sys.argv[1:]
@@ -64,10 +65,12 @@ def statistics(inventory):
             max_k = key
         elif inventory.get(key) < inventory.get(min_k):
             min_k = key
-    print(f"Most abundant: {max_k} ({inventory.get(max_k)} {"units" if inventory.get(max_k) != 1 else "unit"})")
-    print(f"Least abundant: {min_k} ({inventory.get(min_k)} {"units" if inventory.get(min_k) != 1 else "unit"})")
+    print(f"Most abundant: {max_k} ({inventory.get(max_k)} "
+          f"{"units" if inventory.get(max_k) != 1 else "unit"})")
+    print(f"Least abundant: {min_k} ({inventory.get(min_k)} "
+          f"{"units" if inventory.get(min_k) != 1 else "unit"})")
     print()
-    
+
 
 def categories(inventory):
     print("=== Item Categories ===")
@@ -109,7 +112,7 @@ def management(inventory):
     for key in inventory:
         if inventory.get(key) == min_value:
             restock.update({key: min_value})
-    print(f"Restock needed: [", end="")
+    print("Restock needed: [", end="")
     first = True
     for key in restock:
         if not first:
@@ -142,9 +145,7 @@ def demo(inventory):
         first = False
     print("]")
     print("Sample lookup - \'sword\' in inventory: "
-    f"{True if "sword" in inventory else False}")
-    
-
+          f"{True if "sword" in inventory else False}")
 
 
 inventory = args_to_dict()
