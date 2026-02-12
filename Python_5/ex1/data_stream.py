@@ -2,7 +2,7 @@ from typing import Any, List, Dict, Union, Optional
 from abc import ABC, abstractmethod
 
 class DataStream(ABC):
-    def __init__(self, stream_id: str):
+    def __init__(self, stream_id: str) -> None:
         print("Initializing Stream...")
         print(f"Stream ID: {stream_id}")
         self._stream_id = stream_id
@@ -24,12 +24,12 @@ class DataStream(ABC):
             "Stream_id": self._stream_id
         }
 
-    def id(self):
+    def id(self) -> str:
         return self._stream_id
 
 
 class SensorStream(DataStream):
-    def __init__(self, stream_id: str):
+    def __init__(self, stream_id: str) -> None:
         print("Initializing Sensor Stream...")
         print(f"Stream ID: {stream_id}, Type: Environmental Data")
         super().__init__(stream_id)
@@ -82,7 +82,7 @@ class SensorStream(DataStream):
         
 
 class TransactionStream(DataStream):
-    def __init__(self, stream_id: str):
+    def __init__(self, stream_id: str) -> None:
         print("Initializing Transaction Stream...")
         print(f"Stream ID: {stream_id}, Type: Financial Data")
         super().__init__(stream_id)
@@ -131,7 +131,7 @@ class TransactionStream(DataStream):
 
 
 class EventStream(DataStream):
-    def __init__(self, stream_id: str):
+    def __init__(self, stream_id: str) -> None:
         print("Initializing Event Stream...")
         print(f"Stream ID: {stream_id}, Type: System Events")
         super().__init__(stream_id)
@@ -173,16 +173,16 @@ class EventStream(DataStream):
         }
 
 
-class StreamManager:
-    def __init__(self):
+class StreamProcessor:
+    def __init__(self) -> None:
         self.streams: List[DataStream] = []
 
-    def add_stream(self, stream: DataStream):
+    def add_stream(self, stream: DataStream) -> None:
         if not isinstance(stream, DataStream):
             raise TypeError("Only DataStream objects allowed")
         self.streams.append(stream)
 
-    def process_all(self, batches: Dict[str, List[Any]]):
+    def process_all(self, batches: Dict[str, List[Any]]) -> None:
         print("=== Polymorphic Stream Processing ===")
         print("Processing mixed stream types through unified interface...\n")
 
@@ -208,7 +208,7 @@ print()
 event = EventStream("EVENT_001")
 print(event.process_batch(["login", "error", "logout"]))
 print()
-manager = StreamManager()
+manager = StreamProcessor()
 manager.add_stream(sensor)
 manager.add_stream(transaction)
 manager.add_stream(event)
