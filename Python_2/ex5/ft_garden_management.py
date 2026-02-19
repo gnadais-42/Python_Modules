@@ -11,26 +11,27 @@ class WaterError(GardenError):
 
 
 class Plant:
-    def __init__(self, name, water_level, sunlight_hours):
-        self._name = name
-        self._water_level = water_level
-        self._sunlight_hours = sunlight_hours
+    def __init__(self, name: str, water_level: int,
+                 sunlight_hours: int) -> None:
+        self._name: str = name
+        self._water_level: int = water_level
+        self._sunlight_hours: int = sunlight_hours
 
-    def get_name(self):
+    def get_name(self) -> str:
         return self._name
 
-    def get_water_level(self):
+    def get_water_level(self) -> int:
         return self._water_level
 
-    def get_sunlight_hours(self):
+    def get_sunlight_hours(self) -> int:
         return self._sunlight_hours
 
 
 class GardenManager:
-    plants = []
+    plants: list = []
 
     @classmethod
-    def add_plants(cls, plant_list):
+    def add_plants(cls, plant_list: list) -> None:
         try:
             for plant in plant_list:
                 if plant.get_name() is None:
@@ -42,7 +43,7 @@ class GardenManager:
             print(f"Error adding plant: {e}\n")
 
     @classmethod
-    def water_plants(cls):
+    def water_plants(cls) -> None:
         print("Opening watering system")
         try:
             for plant in cls.plants:
@@ -55,23 +56,23 @@ class GardenManager:
             print("Closing watering system (cleanup)\n")
 
     @staticmethod
-    def check_water_level(plant):
-        level = plant.get_water_level()
+    def check_water_level(plant) -> None:
+        level: int = plant.get_water_level()
         if level < 1:
             raise WaterError(f"Water level {level} is too low (min 1)")
         elif level > 10:
             raise WaterError(f"Water level {level} is too high (max 10)")
 
     @staticmethod
-    def check_sunlight_hours(plant):
-        hours = plant.get_sunlight_hours()
+    def check_sunlight_hours(plant) -> None:
+        hours: int = plant.get_sunlight_hours()
         if hours < 2:
             raise SunlightError(f"Sunlight hours {hours} is too low (min 2)")
         elif hours > 12:
             raise SunlightError(f"Sunlight hours {hours} is too high (max 12)")
 
     @classmethod
-    def check_plant_health(cls):
+    def check_plant_health(cls) -> None:
         try:
             for plant in cls.plants:
                 cls.check_water_level(plant)
@@ -84,12 +85,12 @@ class GardenManager:
             print(f"Error checking {plant.get_name()}: {e}\n")
 
 
-def test_garden_management():
+def test_garden_management() -> None:
     print("=== Garden Management System ===\n")
-    manager = GardenManager()
-    plant_list = [Plant("tomato", 5, 8),
-                  Plant("lettuce", 15, 9),
-                  Plant(None, 3, 10)]
+    manager: GardenManager = GardenManager()
+    plant_list: list = [Plant("tomato", 5, 8),
+                        Plant("lettuce", 15, 9),
+                        Plant(None, 3, 10)]
     print("Adding plants to garden...")
     manager.add_plants(plant_list)
     print("Watering plants...")
@@ -106,9 +107,5 @@ def test_garden_management():
     print("Garden management system test complete!")
 
 
-test_garden_management()
-
-
-
-
-
+if __name__ == "__main__":
+    test_garden_management()

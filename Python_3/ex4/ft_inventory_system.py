@@ -1,9 +1,9 @@
 import sys
 
 
-def args_to_dict():
-    final = dict()
-    args = sys.argv[1:]
+def args_to_dict() -> dict:
+    final: dict = dict()
+    args: list = sys.argv[1:]
     for arg in args:
         pair = arg.split(":")
         if len(pair) != 2:
@@ -16,8 +16,8 @@ def args_to_dict():
     return final
 
 
-def analysis(inventory):
-    total_items = 0
+def analysis(inventory: dict) -> None:
+    total_items: int = 0
     for value in inventory.values():
         total_items += value
     print("=== Inventory System Analysis ===")
@@ -25,18 +25,18 @@ def analysis(inventory):
     print(f"Unique item types: {len(inventory)}\n")
 
 
-def print_inventory(inventory):
+def print_inventory(inventory: dict) -> None:
     print("=== Current Inventory ===")
     if not inventory:
         print("Inventory is empty\n")
         return
-    total_items = 0
+    total_items: int = 0
     for value in inventory.values():
         total_items += value
-    temp = dict()
+    temp: dict = dict()
     temp.update(inventory)
     while len(temp) > 0:
-        max_key = None
+        max_key: str = None
         for k in temp:
             max_key = k
             break
@@ -44,42 +44,42 @@ def print_inventory(inventory):
             if temp.get(k) > temp.get(max_key):
                 max_key = k
         value = temp.get(max_key)
-        percentage = round(value * 100 / total_items, 1)
+        percentage: float = round(value * 100 / total_items, 1)
         print(f"{max_key}: {value} units ({percentage}%)")
         del temp[max_key]
     print()
 
 
-def statistics(inventory):
+def statistics(inventory: dict) -> None:
     print("=== Inventory Statistics ===")
     if not inventory:
         print("Inventory is empty\n")
         return
-    max_k = None
+    max_k: str = None
     for key in inventory.keys():
         max_k = key
         break
-    min_k = max_k
+    min_k: str = max_k
     for key in inventory:
         if inventory.get(key) > inventory.get(max_k):
             max_k = key
         elif inventory.get(key) < inventory.get(min_k):
             min_k = key
     print(f"Most abundant: {max_k} ({inventory.get(max_k)} "
-          f"{"units" if inventory.get(max_k) != 1 else "unit"})")
+          f"{'units' if inventory.get(max_k) != 1 else 'unit'})")
     print(f"Least abundant: {min_k} ({inventory.get(min_k)} "
-          f"{"units" if inventory.get(min_k) != 1 else "unit"})")
+          f"{'units' if inventory.get(min_k) != 1 else 'unit'})")
     print()
 
 
-def categories(inventory):
+def categories(inventory: dict) -> None:
     print("=== Item Categories ===")
     if not inventory:
         print("Inventory is empty\n")
         return
-    abundant = dict()
-    moderate = dict()
-    scarce = dict()
+    abundant: dict = dict()
+    moderate: dict = dict()
+    scarce: dict = dict()
     for item in inventory.items():
         if item[1] < 4:
             scarce.update({item[0]: item[1]})
@@ -96,12 +96,12 @@ def categories(inventory):
     print()
 
 
-def management(inventory):
+def management(inventory: dict) -> None:
     print("=== Management Suggestions ===")
     if not inventory:
         print("Inventory is empty\n")
         return
-    restock = dict()
+    restock: dict = dict()
     min_value = None
     for value in inventory.values():
         min_value = value
@@ -113,7 +113,7 @@ def management(inventory):
         if inventory.get(key) == min_value:
             restock.update({key: min_value})
     print("Restock needed: [", end="")
-    first = True
+    first: bool = True
     for key in restock:
         if not first:
             print(", ", end="")
@@ -129,7 +129,7 @@ def demo(inventory):
         print("Inventory is empty")
         return
     print("Dictionary keys: [", end="")
-    first = True
+    first: bool = True
     for key in inventory:
         if not first:
             print(", ", end="")
@@ -145,13 +145,18 @@ def demo(inventory):
         first = False
     print("]")
     print("Sample lookup - \'sword\' in inventory: "
-          f"{True if "sword" in inventory else False}")
+          f"{True if 'sword' in inventory else False}")
 
 
-inventory = args_to_dict()
-analysis(inventory)
-print_inventory(inventory)
-statistics(inventory)
-categories(inventory)
-management(inventory)
-demo(inventory)
+def main() -> None:
+    inventory: dict = args_to_dict()
+    analysis(inventory)
+    print_inventory(inventory)
+    statistics(inventory)
+    categories(inventory)
+    management(inventory)
+    demo(inventory)
+
+
+if __name__ == "__main__":
+    main()

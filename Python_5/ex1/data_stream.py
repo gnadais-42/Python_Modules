@@ -1,6 +1,7 @@
 from typing import Any, List, Dict, Union, Optional
 from abc import ABC, abstractmethod
 
+
 class DataStream(ABC):
     def __init__(self, stream_id: str) -> None:
         print("Initializing Stream...")
@@ -11,11 +12,11 @@ class DataStream(ABC):
     def process_batch(self, data_batch: List[Any]) -> str:
         pass
 
-    def  filter_data(self, data_batch: List[Any], 
+    def filter_data(self, data_batch: List[Any],
                     criteria: Optional[str] = None) -> List[Any]:
         if not isinstance(data_batch, list):
             raise TypeError("Data must come in a List")
-        elif not isinstance(criteria, str) and criteria != None:
+        elif not isinstance(criteria, str) and criteria is not None:
             raise TypeError("Please enter valid criteria")
         return data_batch
 
@@ -50,12 +51,12 @@ class SensorStream(DataStream):
                     f", avg temp: {self.total_temp / self.count_temp:.1f}ºC")
         except Exception as e:
             return f"Error: {e}"
-        
+
     def filter_data(self, data_batch: List[str],
                     criteria: Optional[str] = None):
         if not isinstance(data_batch, list):
             raise TypeError("Data must come in a List")
-        elif not isinstance(criteria, str) and criteria != None:
+        elif not isinstance(criteria, str) and criteria is not None:
             raise TypeError("Please enter valid criteria")
         if criteria != "Environmental":
             raise ValueError("Please enter valid criteria")
@@ -68,7 +69,7 @@ class SensorStream(DataStream):
                 raise ValueError("Invalid data")
             ret_lst.append((data[0], float(data[1])))
         return ret_lst
-    
+
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
         avg_temp = 0
         if self.count_temp != 0:
@@ -79,7 +80,7 @@ class SensorStream(DataStream):
             "Total _temp": self.total_temp,
             "Average_temp": avg_temp
         }
-        
+
 
 class TransactionStream(DataStream):
     def __init__(self, stream_id: str) -> None:
@@ -89,11 +90,11 @@ class TransactionStream(DataStream):
         self.operations = 0
         self.net_flow = 0
 
-    def  filter_data(self, data_batch: List[Any], 
+    def filter_data(self, data_batch: List[Any],
                     criteria: Optional[str] = None) -> List[Any]:
         if not isinstance(data_batch, list):
             raise TypeError("Data must come in a List")
-        elif not isinstance(criteria, str) and criteria != None:
+        elif not isinstance(criteria, str) and criteria is not None:
             raise TypeError("Please enter valid criteria")
         if criteria != "Financial":
             raise ValueError("Please enter valid criteria")
@@ -106,7 +107,7 @@ class TransactionStream(DataStream):
                 raise ValueError("Invalid data")
             ret_lst.append((data[0], float(data[1])))
         return ret_lst
-    
+
     def process_batch(self, data_batch: List[str]) -> str:
         print(f"Processing transaction batch: {data_batch}")
         try:
@@ -121,7 +122,7 @@ class TransactionStream(DataStream):
                     f", net flow: {self.net_flow:+} units")
         except Exception as e:
             return f"Error: {e}"
-        
+
     def get_stats(self) -> Dict[str, Union[str, int, float]]:
         return {
             "Stream_id": self._stream_id,
@@ -138,11 +139,11 @@ class EventStream(DataStream):
         self.events = 0
         self.errors = 0
 
-    def  filter_data(self, data_batch: List[Any], 
+    def filter_data(self, data_batch: List[Any],
                     criteria: Optional[str] = None) -> List[Any]:
         if not isinstance(data_batch, list):
             raise TypeError("Data must come in a List")
-        elif not isinstance(criteria, str) and criteria != None:
+        elif not isinstance(criteria, str) and criteria is not None:
             raise TypeError("Please enter valid criteria")
         if criteria != "Event":
             raise ValueError("Please enter valid criteria")
@@ -198,24 +199,28 @@ class StreamProcessor:
                 print(f"- Error processing stream {stream.id()}: {e}")
 
 
-print("=== CODE NEXUS- POLYMORPHIC STREAM SYSTEM ===\n")
-sensor = SensorStream("SENSOR_001")
-print(sensor.process_batch(["temp:22.5", "humidity:65", "pressure:1013"]))
-print()
-transaction = TransactionStream("TRANS_001")
-print(transaction.process_batch(["buy:100", "sell:150", "buy:75"]))
-print()
-event = EventStream("EVENT_001")
-print(event.process_batch(["login", "error", "logout"]))
-print()
-manager = StreamProcessor()
-manager.add_stream(sensor)
-manager.add_stream(transaction)
-manager.add_stream(event)
-batches = {
-    "SENSOR_001": ["temp:25.0", "temp:20.0"],
-    "TRANS_001": ["buy:200", "sell:50", "buy:25", "sell:100"],
-    "EVENT_001": ["login", "error", "error"]
-}
-manager.process_all(batches)
+def main() -> None:
+    print("=== CODE NEXUS- POLYMORPHIC STREAM SYSTEM ===\n")
+    sensor = SensorStream("SENSOR_001")
+    print(sensor.process_batch(["temp:22.5", "humidity:65", "pressure:1013"]))
+    print()
+    transaction = TransactionStream("TRANS_001")
+    print(transaction.process_batch(["buy:100", "sell:150", "buy:75"]))
+    print()
+    event = EventStream("EVENT_001")
+    print(event.process_batch(["login", "error", "logout"]))
+    print()
+    manager = StreamProcessor()
+    manager.add_stream(sensor)
+    manager.add_stream(transaction)
+    manager.add_stream(event)
+    batches = {
+        "SENSOR_001": ["temp:25.0", "temp:20.0"],
+        "TRANS_001": ["buy:200", "sell:50", "buy:25", "sell:100"],
+        "EVENT_001": ["login", "error", "error"]
+    }
+    manager.process_all(batches)
 
+
+if __name__ == "__main__":
+    main()

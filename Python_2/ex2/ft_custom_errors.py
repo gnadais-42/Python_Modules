@@ -10,7 +10,7 @@ class WaterError(GardenError):
     pass
 
 
-def test_PlantError():
+def test_PlantError() -> None:
     print("Testing PlantError...")
     try:
         raise PlantError("The tomato is wilting!")
@@ -18,7 +18,7 @@ def test_PlantError():
         print(f"Caught a PlantError: {e}\n")
 
 
-def test_WaterError():
+def test_WaterError() -> None:
     print("Testing WaterError...")
     try:
         raise WaterError("Not enough water in the tank!")
@@ -26,7 +26,7 @@ def test_WaterError():
         print(f"Caught a WaterError: {e}\n")
 
 
-def test_GardenError():
+def test_GardenError() -> None:
     print("Testing catching all garden errors...")
     try:
         raise PlantError("The tomato is wilting!")
@@ -38,9 +38,13 @@ def test_GardenError():
         print(f"Caught a garden error: {e}\n")
 
 
-def test_custom_errors():
+def test_custom_errors() -> None:
     print("=== Custom Garden Errors Demo===\n")
     test_PlantError()
     test_WaterError()
     test_GardenError()
     print("All custom error types work correctly!")
+
+
+if __name__ == "__main__":
+    test_custom_errors()

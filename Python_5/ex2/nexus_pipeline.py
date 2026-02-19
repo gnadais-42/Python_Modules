@@ -1,4 +1,4 @@
-from typing import Any, List, Dict, Union, Optional, Protocol
+from typing import Any, List, Dict, Protocol
 from abc import ABC, abstractmethod
 
 
@@ -65,7 +65,8 @@ class TransformStage:
 class OutputStage:
     def process(self, data: Dict[str, Any]) -> str:
         if data["type"] == "sensor":
-            return f"Processed temperature reading: {data['value']}°C ({data['status']})"
+            return f"Processed temperature reading: {data['value']}°C " \
+                   f"({data['status']})"
         elif data["type"] == "user_activity":
             return f"User activity logged: {data['count']} actions processed"
         elif data["type"] == "stream":
@@ -122,17 +123,21 @@ class NexusManager:
 
     def add_pipeline(self, pipeline: ProcessingPipeline) -> None:
         self.pipelines.append(pipeline)
-        
+
     def process_all(self, data_list: list) -> None:
-        for data, pipeline in zip(data_list, self.pipelines):
-            print("Output:", self.process_data(data, pipeline) + "\n")
+        try:
+            for data, pipeline in zip(data_list, self.pipelines):
+                print("Output:", self.process_data(data, pipeline) + "\n")
+        except Exception:
+            pass
 
     def process_data(self, data: Any, pipeline: ProcessingPipeline) -> Any:
         result = data
         try:
             result = pipeline.process(result)
         except Exception:
-            print(f"[NexusManager] Recovery: skipping failed pipeline {pipeline.pipeline_id}")
+            print("[NexusManager] Recovery: "
+                  f"skipping failed pipeline {pipeline.pipeline_id}")
         return result
 
 
@@ -155,8 +160,8 @@ def main() -> None:
 
     json_data = '{"sensor": "temp", "value": 23.5, "unit": "C"}'
     csv_data = "user,action,timestamp"
-    stream_data = [22.1, 23.5, 21.8, 24.0, 22.5]
-    
+    stream_data = [22.1, 23.5, 21.8, 24.0, 22.0]
+
     data = [json_data, csv_data, stream_data]
     manager.process_all(data)
 

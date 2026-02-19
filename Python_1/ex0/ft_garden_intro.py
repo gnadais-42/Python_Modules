@@ -1,7 +1,7 @@
-def ft_garden_intro():
-    name = "Margarida"
-    height = 100
-    age = 42
+def ft_garden_intro() -> None:
+    name: str = "Margarida"
+    height: int = 100
+    age: int = 42
     print(f"""=== Welcome to my Garden ===
 Plant: {name}
 Height: {height}cm
