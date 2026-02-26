@@ -16,16 +16,17 @@ def parse_coordinates(coordinates: str) -> tuple:
     return tuple(final)
 
 
-def calculate_distance(coordinates: tuple) -> float:
-    x, y, z = coordinates
-    return round(math.sqrt(x ** 2 + y ** 2 + z ** 2), 1)
+def calculate_distance(position1: tuple, position2: tuple) -> float:
+    x1, y1, z1 = position1
+    x2, y2, z2 = position2
+    return round(math.sqrt((x2-x1) ** 2 + (y2-y1) ** 2 + (z2-z1) ** 2), 1)
 
 
 def position_tracker(coordinates: str):
     try:
         parsed: tuple = parse_coordinates(coordinates)
         print("Distance between (0, 0, 0) and "
-              f"{parsed}: {calculate_distance(parsed)}\n")
+              f"{parsed}: {calculate_distance(parsed, (0,0,0))}\n")
     except Exception as e:
         print(f"Error parsing coordinates: {e}")
         print(f"Error details - Type: {type(e).__name__}, "
@@ -33,9 +34,12 @@ def position_tracker(coordinates: str):
 
 
 def tuple_unpacking(tup: tuple) -> None:
-    x, y, z = tup
-    print(f"Player at x={x}, y={y}, z={z}\n"
-          f"Coordinates: X={x}, Y={y}, Z={z}")
+    try:
+        x, y, z = tup
+        print(f"Player at x={x}, y={y}, z={z}\n"
+              f"Coordinates: X={x}, Y={y}, Z={z}")
+    except ValueError as e:
+        print("Error:", e)
 
 
 def main() -> None:

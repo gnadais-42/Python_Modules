@@ -1,4 +1,6 @@
-def game_events(n: int, players: list) -> tuple:
+from typing import Generator
+
+def game_events(n: int, players: list) -> Generator:
     actions: tuple = ("killed monster", "found treasure", "leveled up")
     i: int = 0
     while i < n:
@@ -8,7 +10,7 @@ def game_events(n: int, players: list) -> tuple:
         i += 1
 
 
-def fibonacci() -> int:
+def fibonacci() -> Generator:
     a: int = 0
     b: int = 1
     i: int = 0
@@ -25,7 +27,7 @@ def fibonacci() -> int:
         i += 1
 
 
-def prime() -> int:
+def prime() -> Generator:
     n: int = 2
     while True:
         i: int = 2

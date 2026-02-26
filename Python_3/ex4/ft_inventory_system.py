@@ -10,7 +10,10 @@ def args_to_dict() -> dict:
             print(f"Argument {arg} in invalid format (\"Key:Value\")")
             continue
         try:
-            final.update({pair[0]: int(pair[1])})
+            if pair[0] in final:
+                final[pair[0]] += int(pair[1])
+            else:
+                final.update({pair[0]: int(pair[1])})
         except ValueError as e:
             print(f"Error: {e}")
     return final

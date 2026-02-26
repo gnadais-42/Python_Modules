@@ -8,7 +8,7 @@ def main() -> None:
         "charlie": 2150,
         "diana": 1950,
     }
-    achievements: list = {
+    achievements: dict = {
         "alice": ["first_kill", "level_10", "boss_slayer",
                   "speed_run", "collector"],
         "bob": ["first_kill", "level_10", "collector"],
