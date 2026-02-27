@@ -21,11 +21,11 @@ def draw(deck: Deck) -> Card:
     return card
 
 
-def draw_and_play(deck: Deck) -> None:
+def draw_and_play(deck: Deck, game_state: dict) -> None:
     c_deck = deck.deck().copy()
     for _ in c_deck:
         drawn = draw(deck)
-        print("Play result:", drawn.play({}), end='\n\n')
+        print("Play result:", drawn.play(game_state), end='\n\n')
 
 
 def main() -> None:
@@ -54,7 +54,8 @@ def main() -> None:
     deck.shuffle()
     print("Deck stats:", deck.get_deck_stats(), end='\n\n')
     print("Drawing and playing cards:\n")
-    draw_and_play(deck)
+    game_state = {"available_mana": 7}
+    draw_and_play(deck, game_state)
     print("Polymorphism in action: "
           "Same interface, different card behaviors!")
 

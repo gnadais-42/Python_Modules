@@ -10,6 +10,13 @@ class SpellCard(Card):
         return self._effect
 
     def play(self, game_state: dict) -> dict:
+        try:
+            if game_state["available_mana"] < self.mana():
+                print("Not enough mana to play", self.name())
+                return {}
+        except KeyError:
+            print("Invalid game state")
+            return {}
         return {
             "card_played": self.name(),
             "mana_used": self.mana(),

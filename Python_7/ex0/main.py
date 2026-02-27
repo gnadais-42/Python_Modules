@@ -11,12 +11,12 @@ def main() -> None:
         print(f"Error: {e}")
         return
     print("CreatureCard Info:", dragon.get_card_info(), sep="\n", end="\n\n")
-    mana_available = 6
-    print(f"Playing {dragon.name()} with {mana_available} mana available:")
-    playable = dragon.is_playable(mana_available)
+    game_state = {"available_mana": 6}
+    print(f"Playing {dragon.name()} with {game_state['available_mana']} mana available:")
+    playable = dragon.is_playable(game_state['available_mana'])
     print("Playable:", playable)
     if playable:
-        print("Play result:", dragon.play({}), end="\n\n")
+        print("Play result:", dragon.play(game_state), end="\n\n")
         print(f"{dragon.name()} attacks {warrior.name()}:")
         print("Attack result:", dragon.attack_target(warrior))
     print("\nTesting insufficient mana (3 available)")
