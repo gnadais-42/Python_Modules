@@ -17,8 +17,12 @@ def parse_coordinates(coordinates: str) -> tuple:
 
 
 def calculate_distance(position1: tuple, position2: tuple) -> float:
-    x1, y1, z1 = position1
-    x2, y2, z2 = position2
+    try:
+        x1, y1, z1 = position1
+        x2, y2, z2 = position2
+    except ValueError as e:
+        print("Error:", e)
+        return 0.0
     return round(math.sqrt((x2-x1) ** 2 + (y2-y1) ** 2 + (z2-z1) ** 2), 1)
 
 
