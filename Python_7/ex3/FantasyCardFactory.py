@@ -4,7 +4,7 @@ from ex0.CreatureCard import CreatureCard
 from ex1.SpellCard import SpellCard
 from ex1.ArtifactCard import ArtifactCard
 from random import choice
-import enum
+from enum import Enum
 
 
 class FantasyCardFactory(CardFactory):
@@ -17,7 +17,7 @@ class FantasyCardFactory(CardFactory):
     def create_creature(self,
                         name_or_power:
                         str | int | None = None) -> Card:
-        stats = choice(list(Creatures))
+        stats = choice(list(Creatures)).value
         return CreatureCard(
             name_or_power,
             stats[0],
@@ -29,7 +29,7 @@ class FantasyCardFactory(CardFactory):
     def create_spell(self,
                      name_or_power:
                      str | int | None = None) -> Card:
-        stats = choice(list(Spells))
+        stats = choice(list(Spells)).value
         return SpellCard(
             name_or_power,
             stats[0],
@@ -40,12 +40,13 @@ class FantasyCardFactory(CardFactory):
     def create_artifact(self,
                         name_or_power:
                         str | int | None = None) -> Card:
-        stats = choice(list(Artifacts))
+        stats = choice(list(Artifacts)).value
         return ArtifactCard(
             name_or_power,
             stats[0],
             stats[1],
-            stats[2]
+            stats[2],
+            stats[3]
         )
 
     def create_themed_deck(self, size: int) -> dict:
@@ -65,6 +66,7 @@ class FantasyCardFactory(CardFactory):
             category, func = choice(actions)
             card = func()
             final[category].append(card)
+        return final
 
 
     def get_supported_types(self) -> dict:
@@ -75,21 +77,21 @@ class FantasyCardFactory(CardFactory):
         }
 
 
-class Creatures(enum):
+class Creatures(Enum):
     COMMON: int = (1, "Common", 2, 2)
     UNCOMMON = (2, "Uncommon", 3, 4)
     RARE = (3, "Rare", 4, 5)
     LEGENDARY = (4, "Legendary", 6, 6)
 
 
-class Spells(enum):
+class Spells(Enum):
     COMMON = (1, "Common", "Deal 2 damage")
     UNCOMMON = (2, "Uncommon", "Deal 3 damage")
     RARE = (3, "Rare", "Deal 5 damage")
     LEGENDARY = (4, "Legendary", "Deal 8 damage")
 
 
-class Artifacts(enum):
+class Artifacts(Enum):
     COMMON = (1, "Common", "1 Mana per turn", 3)
     UNCOMMON = (2, "Uncommon", "2 Mana per turn", 3)
     RARE = (3, "Rare", "3 Mana per turn", 4)

@@ -10,10 +10,10 @@ class AggressiveStrategy(GameStrategy):
         played_cards = []
         for card in sorted_hand:
             if card.mana() <= self._mana:
-                self._mana -+ card.mana()
+                self._mana -= card.mana()
                 played_cards.append(card)
         return {
-            'cards_played': played_cards,
+            'cards_played': [c.name() for c in played_cards],
             'mana_used': sum([h.mana() for h in played_cards]),
             'targets_attacked': self.prioritize_targets(battlefield),
 
@@ -24,4 +24,4 @@ class AggressiveStrategy(GameStrategy):
         return "AggressiveStrategy"
 
     def prioritize_targets(self, available_targets: list) -> list:
-        targets = [t for t in available_targets if t.health() > 0]
+        return [t for t in available_targets if t.health() > 0]
