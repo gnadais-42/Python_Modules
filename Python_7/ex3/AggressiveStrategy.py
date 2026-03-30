@@ -13,12 +13,10 @@ class AggressiveStrategy(GameStrategy):
                 self._mana -= card.mana()
                 played_cards.append(card)
         return {
-            'cards_played': [c.name() for c in played_cards],
+            'cards_played': played_cards,
             'mana_used': sum([h.mana() for h in played_cards]),
             'targets_attacked': self.prioritize_targets(battlefield),
-
         }
-
 
     def get_strategy_name(self) -> str:
         return "AggressiveStrategy"

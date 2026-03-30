@@ -12,7 +12,8 @@ def main() -> None:
         return
     print("CreatureCard Info:", dragon.get_card_info(), sep="\n", end="\n\n")
     game_state = {"available_mana": 6}
-    print(f"Playing {dragon.name()} with {game_state['available_mana']} mana available:")
+    print(f"Playing {dragon.name()} with"
+          f" {game_state['available_mana']} mana available:")
     playable = dragon.is_playable(game_state['available_mana'])
     print("Playable:", playable)
     if playable:

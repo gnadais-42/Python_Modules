@@ -3,13 +3,15 @@ name = "ex1"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "gnadias-"}
+    {name = "gnadais-"}
 ]
-requires-python = ">=3.12"
+package-mode = false
+requires-python = "^3.10.12"
 dependencies = [
-    "numpy (>=2.4.2,<3.0.0)",
-    "matplotlib (>=3.10.8,<4.0.0)",
-    "pandas (>=3.0.1,<4.0.0)"
+    "numpy (>=1.24,<2.0)",
+    "pandas (>=2.0,<3.0)",
+    "matplotlib (>=3.7,<4.0)",
+    "requests (>=2.31,<3.0)"
 ]
 
 

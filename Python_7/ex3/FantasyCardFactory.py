@@ -13,7 +13,6 @@ class FantasyCardFactory(CardFactory):
         self._spells = ['fireball']
         self._artifacts = ['mana_ring']
 
-
     def create_creature(self,
                         name_or_power:
                         str | int | None = None) -> Card:
@@ -58,16 +57,17 @@ class FantasyCardFactory(CardFactory):
         if not isinstance(size, int):
             return final
         actions = [
-            ("Creatures", lambda: self.create_creature(choice(self._creatures))),
-            ("Spells" ,lambda: self.create_spell(choice(self._spells))),
-            ("Artifacts", lambda: self.create_artifact(choice(self._artifacts))),
+            ("Creatures",
+             lambda: self.create_creature(choice(self._creatures))),
+            ("Spells", lambda: self.create_spell(choice(self._spells))),
+            ("Artifacts",
+             lambda: self.create_artifact(choice(self._artifacts))),
         ]
         for _ in range(size):
             category, func = choice(actions)
             card = func()
             final[category].append(card)
         return final
-
 
     def get_supported_types(self) -> dict:
         return {

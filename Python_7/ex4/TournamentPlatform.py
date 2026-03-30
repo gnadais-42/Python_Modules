@@ -1,13 +1,14 @@
 from ex4.TournamentCard import TournamentCard
 
-class TournamentPlatform:
 
+class TournamentPlatform:
     def __init__(self) -> None:
         self._cards: dict[str, TournamentCard] = {}
         self._matches_played: int = 0
 
     def register_card(self, card: TournamentCard) -> str:
-        card_id = f"{card.name().lower().replace(' ', '_')}_{len(self._cards)+1}"
+        card_id = f"{card.name().lower().replace(' ', '_')}_" \
+                  f"{len(self._cards)+1}"
         self._cards[card_id] = card
         return card_id
 

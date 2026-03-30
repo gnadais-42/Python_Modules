@@ -11,7 +11,7 @@ class Deck:
 
     def deck(self):
         return self._deck
-    
+
     def add_card(self, card: Card) -> None:
         self.deck().append(card)
 
@@ -27,7 +27,7 @@ class Deck:
 
     def draw_card(self) -> Card:
         return self.deck().pop(0)
-    
+
     def get_deck_stats(self) -> dict:
         state = {
             "total_cards": 0,
@@ -45,5 +45,5 @@ class Deck:
                 state["spells"] += 1
             elif isinstance(card, ArtifactCard):
                 state["artifacts"] += 1
-        state["avg_cost"] = round(t_mana / state["total_cards"], 1) 
+        state["avg_cost"] = round(t_mana / state["total_cards"], 1)
         return state

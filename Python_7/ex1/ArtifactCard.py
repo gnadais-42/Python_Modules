@@ -1,5 +1,6 @@
 from ex0.Card import Card
 
+
 class ArtifactCard(Card):
     def __init__(self, name: str, cost: int,
                  rarity: str, ability: str, durability: int) -> None:
@@ -21,14 +22,14 @@ class ArtifactCard(Card):
         except KeyError:
             print("Invalid game state")
             return {}
-        
+
         return {
             "card_played": self.name(),
             "mana_used": self.mana(),
             "ability": self.ability(),
             "duration": self.durability()
         }
-    
+
     def activate_ability(self) -> dict:
         return {
             "ability": self.ability(),

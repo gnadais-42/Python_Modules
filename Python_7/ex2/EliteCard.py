@@ -14,13 +14,13 @@ class EliteCard(Card, Combatable, Magical):
 
     def get_attack(self) -> int:
         return self._attack
-    
+
     def get_health(self) -> int:
         return self._health
 
     def total_mana(self) -> int:
         return self._mana
-    
+
     def play(self, game_state: dict) -> dict:
         try:
             if game_state["available_mana"] < self.mana():

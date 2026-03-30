@@ -4,7 +4,6 @@ from ex4.Rankable import Rankable
 
 
 class TournamentCard(Card, Combatable, Rankable):
-
     def __init__(
         self,
         name: str,

@@ -1,11 +1,11 @@
 from ex2.EliteCard import EliteCard
 
+
 def main():
     hero = EliteCard("Arcane Warrior", 6, "Rare", 5, 7, 7)
     enemy = EliteCard("Enemy", 2, "common", 3, 3, 3)
     en1 = EliteCard("Enemy1", 2, "common", 3, 3, 3)
     en2 = EliteCard("Enemy2", 2, "common", 3, 3, 3)
-
 
     print("=== DataDeck Ability System ===\n")
     print("""EliteCard capabilities:
