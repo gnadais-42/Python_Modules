@@ -25,6 +25,8 @@ def validate_config(config: dict) -> None:
         print("Missing required environment variables:")
         for var in missing:
             print(f"- {var}")
+        print("\nYou can add them by copying .env.example like this"
+              "\ncp .env.example .env")
         sys.exit(1)
 
 
