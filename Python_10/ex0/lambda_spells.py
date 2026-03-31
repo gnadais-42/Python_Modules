@@ -47,9 +47,9 @@ def main() -> None:
     transformed_spells: list[str] = spell_transformer(spells)
     stats: dict = mage_stats(mages)
     print("Testing artifact sorter...")
-    print((f"{sorted_arti[0]["name"]} ({sorted_arti[0]["power"]} power) "
-           f"comes before {sorted_arti[1]["name"]}"
-           f"({sorted_arti[1]["power"]} power)")
+    print((f"{sorted_arti[0]['name']} ({sorted_arti[0]['power']} power) "
+           f"comes before {sorted_arti[1]['name']}"
+           f"({sorted_arti[1]['power']} power)")
           if len(sorted_arti) >= 2 else "Provide a larger artifact list")
 
     print("\nTesting power filter...")

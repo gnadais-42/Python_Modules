@@ -26,26 +26,28 @@ class AlienContact(BaseModel):
         if not self.contact_id.startswith("AC"):
             raise ValueError('Contact ID must start with "AC" (Alien Contact)')
         return self
-    
+
     @model_validator(mode='after')
     def check_physical_contacts(self) -> "AlienContact":
         if self.contact_type == ContactType.PHYSICAL and not self.is_verified:
             raise ValueError("Physical contact reports must be verified")
         return self
-    
+
     @model_validator(mode='after')
     def check_telepathic_contacts(self) -> "AlienContact":
         if self.contact_type == ContactType.TELEPATHIC \
-        and self.witness_count < 3:
-            raise ValueError("Telepathic contact requires at least 3 witnesses")
+           and self.witness_count < 3:
+            raise ValueError("Telepathic contact requires"
+                             "at least 3 witnesses")
         return self
-    
+
     @model_validator(mode='after')
     def check_strong_signals(self) -> "AlienContact":
         if self.signal_strength > 7.0 and self.message_received is None:
-            raise ValueError("Strong signals (> 7.0) should include received messages")
+            raise ValueError("Strong signals (> 7.0) should"
+                             "include received messages")
         return self
-    
+
 
 def main() -> None:
     print("Alien Contact Log Validation")
@@ -53,7 +55,7 @@ def main() -> None:
     print("Valid contact report:")
     ac1 = AlienContact(
         contact_id="AC_2024_001",
-        contact_type= ContactType.RADIO,
+        contact_type=ContactType.RADIO,
         location="Area 51, Nevada",
         signal_strength=8.5,
         duration_minutes=45,
@@ -74,16 +76,16 @@ def main() -> None:
 
     print("\n======================================")
     try:
-        ac2 = AlienContact(
+        AlienContact(
             contact_id="AC_2024_001",
-        contact_type= ContactType.TELEPATHIC,
-        location="Area 51, Nevada",
-        signal_strength=8.5,
-        duration_minutes=45,
-        witness_count=2,
-        message_received="Greetings from Zeta Reticuli",
-        timestamp=datetime.now(),
-        is_verified=True
+            contact_type=ContactType.TELEPATHIC,
+            location="Area 51, Nevada",
+            signal_strength=8.5,
+            duration_minutes=45,
+            witness_count=2,
+            message_received="Greetings from Zeta Reticuli",
+            timestamp=datetime.now(),
+            is_verified=True
         )
     except ValidationError as e:
         print(f"Expected validation error:\n{e.errors()[0]['msg']}")

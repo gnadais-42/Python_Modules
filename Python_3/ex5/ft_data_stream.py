@@ -1,5 +1,6 @@
 from typing import Generator
 
+
 def game_events(n: int, players: list) -> Generator:
     actions: tuple = ("killed monster", "found treasure", "leveled up")
     i: int = 0

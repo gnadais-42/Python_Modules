@@ -36,13 +36,13 @@ def main() -> None:
     )
     print("\n===================================")
     try:
-        ss2 = SpaceStation(
+        SpaceStation(
             station_id="ISS001",
-        name="International Space Station",
-        crew_size=0,
-        power_level=85.5,
-        oxygen_level=92.3,
-        last_maintenance=datetime.now()
+            name="International Space Station",
+            crew_size=0,
+            power_level=85.5,
+            oxygen_level=92.3,
+            last_maintenance=datetime.now()
         )
     except ValidationError as e:
         print(f"Expected validation error:\n{e.errors()[0]['msg']}")

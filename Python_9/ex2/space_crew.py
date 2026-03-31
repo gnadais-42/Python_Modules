@@ -2,6 +2,7 @@ from pydantic import Field, ValidationError, BaseModel, model_validator
 from datetime import datetime
 from enum import Enum
 
+
 class Rank(Enum):
     cadet: str = "cadet"
     officer: str = "officer"
@@ -41,14 +42,14 @@ class SpaceMission(BaseModel):
         if not self.mission_id.startswith('M'):
             raise ValueError('Mission ID must start with "M"')
         return self
-    
+
     @model_validator(mode='after')
     def check_commader_or_captain(self) -> "SpaceMission":
         for member in self.crew:
             if member.rank == Rank.captain or member.rank == Rank.commander:
                 return self
         raise ValueError("Must have at least one Commander or Captain")
-    
+
     @model_validator(mode='after')
     def check_duration(self) -> "SpaceMission":
         if self.duration_days > 365:
@@ -56,16 +57,17 @@ class SpaceMission(BaseModel):
             for member in self.crew:
                 experienced += 1 if member.years_experience >= 5 else 0
             if experienced < len(self.crew) / 2:
-                raise ValueError("Long missions (> 365 days) need 50% experienced crew (5+ years)")
+                raise ValueError("Long missions (> 365 days) need "
+                                 "50% experienced crew (5+ years)")
         return self
-    
+
     @model_validator(mode='after')
     def check_active_members(self) -> "SpaceMission":
         for member in self.crew:
             if not member.is_active:
                 raise ValueError("All crew members must be active")
         return self
-    
+
 
 def main() -> None:
     print("Space Mission Crew Validation")
@@ -98,8 +100,8 @@ def main() -> None:
                 ),
                 CrewMember(
                     member_id="CM-2",
-                    name = "Alice Johnson",
-                    rank = Rank.officer,
+                    name="Alice Johnson",
+                    rank=Rank.officer,
                     age=25,
                     specialization="Engineering",
                     years_experience=3
@@ -120,7 +122,7 @@ def main() -> None:
         print(e)
     print("\n=========================================")
     try:
-        mission_invalid = SpaceMission(
+        SpaceMission(
             mission_id="M2024_MARS",
             mission_name="Mars Colony Establishment",
             destination="Mars",
@@ -145,16 +147,16 @@ def main() -> None:
                 ),
                 CrewMember(
                     member_id="CM-2",
-                    name = "Alice Johnson",
-                    rank = Rank.officer,
+                    name="Alice Johnson",
+                    rank=Rank.officer,
                     age=25,
                     specialization="Engineering",
                     years_experience=3
                 ),
                 CrewMember(
                     member_id="CM-3",
-                    name = "whatever",
-                    rank = Rank.officer,
+                    name="whatever",
+                    rank=Rank.officer,
                     age=25,
                     specialization="whatever",
                     years_experience=3,
