@@ -45,7 +45,7 @@ def main() -> None:
         last_maintenance=datetime.now()
         )
     except ValidationError as e:
-        print(f"Expected validation error:\n{e.errors()[0]["msg"]}")
+        print(f"Expected validation error:\n{e.errors()[0]['msg']}")
     return
 
 

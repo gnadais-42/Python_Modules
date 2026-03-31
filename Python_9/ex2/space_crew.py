@@ -1,7 +1,6 @@
 from pydantic import Field, ValidationError, BaseModel, model_validator
 from datetime import datetime
 from enum import Enum
-from typing import Self
 
 class Rank(Enum):
     cadet: str = "cadet"
@@ -38,20 +37,20 @@ class SpaceMission(BaseModel):
     budget_millions: float = Field(ge=1.0, le=10000.0)
 
     @model_validator(mode='after')
-    def check_id(self) -> Self:
+    def check_id(self) -> "SpaceMission":
         if not self.mission_id.startswith('M'):
             raise ValueError('Mission ID must start with "M"')
         return self
     
     @model_validator(mode='after')
-    def check_commader_or_captain(self) -> Self:
+    def check_commader_or_captain(self) -> "SpaceMission":
         for member in self.crew:
             if member.rank == Rank.captain or member.rank == Rank.commander:
                 return self
         raise ValueError("Must have at least one Commander or Captain")
     
     @model_validator(mode='after')
-    def check_duration(self) -> Self:
+    def check_duration(self) -> "SpaceMission":
         if self.duration_days > 365:
             experienced: int = 0
             for member in self.crew:
@@ -61,7 +60,7 @@ class SpaceMission(BaseModel):
         return self
     
     @model_validator(mode='after')
-    def check_active_members(self) -> Self:
+    def check_active_members(self) -> "SpaceMission":
         for member in self.crew:
             if not member.is_active:
                 raise ValueError("All crew members must be active")
@@ -164,7 +163,7 @@ def main() -> None:
             ]
         )
     except ValidationError as e:
-        print(f"Expected validation error:\n{e.errors()[0]["msg"]}")
+        print(f"Expected validation error:\n{e.errors()[0]['msg']}")
 
 
 if __name__ == "__main__":

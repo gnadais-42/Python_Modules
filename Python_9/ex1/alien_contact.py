@@ -1,7 +1,6 @@
 from enum import Enum
 from pydantic import BaseModel, Field, ValidationError, model_validator
 from datetime import datetime
-from typing import Self
 
 
 class ContactType(Enum):
@@ -23,26 +22,26 @@ class AlienContact(BaseModel):
     is_verified: bool = False
 
     @model_validator(mode='after')
-    def check_id(self) -> Self:
+    def check_id(self) -> "AlienContact":
         if not self.contact_id.startswith("AC"):
             raise ValueError('Contact ID must start with "AC" (Alien Contact)')
         return self
     
     @model_validator(mode='after')
-    def check_physical_contacts(self) -> Self:
+    def check_physical_contacts(self) -> "AlienContact":
         if self.contact_type == ContactType.PHYSICAL and not self.is_verified:
             raise ValueError("Physical contact reports must be verified")
         return self
     
     @model_validator(mode='after')
-    def check_telepathic_contacts(self) -> Self:
+    def check_telepathic_contacts(self) -> "AlienContact":
         if self.contact_type == ContactType.TELEPATHIC \
         and self.witness_count < 3:
             raise ValueError("Telepathic contact requires at least 3 witnesses")
         return self
     
     @model_validator(mode='after')
-    def check_strong_signals(self) -> Self:
+    def check_strong_signals(self) -> "AlienContact":
         if self.signal_strength > 7.0 and self.message_received is None:
             raise ValueError("Strong signals (> 7.0) should include received messages")
         return self
@@ -73,7 +72,7 @@ def main() -> None:
         "\nMessage:", ac1.message_received
     )
 
-    print("======================================")
+    print("\n======================================")
     try:
         ac2 = AlienContact(
             contact_id="AC_2024_001",
@@ -87,7 +86,7 @@ def main() -> None:
         is_verified=True
         )
     except ValidationError as e:
-        print(f"Expected validation error:\n{e.errors()[0]["msg"]}")
+        print(f"Expected validation error:\n{e.errors()[0]['msg']}")
 
 
 if __name__ == "__main__":
