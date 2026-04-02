@@ -30,7 +30,7 @@ def position_tracker(coordinates: str):
     try:
         parsed: tuple = parse_coordinates(coordinates)
         print("Distance between (0, 0, 0) and "
-              f"{parsed}: {calculate_distance(parsed, (0,0,0))}\n")
+              f"{parsed}: {calculate_distance(parsed, (0, 0, 0))}\n")
     except Exception as e:
         print(f"Error parsing coordinates: {e}")
         print(f"Error details - Type: {type(e).__name__}, "
