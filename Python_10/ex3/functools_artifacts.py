@@ -1,9 +1,10 @@
 from functools import reduce, partial, singledispatch, lru_cache
 from operator import add, mul
+from collections.abc import Callable
 
 
 def spell_reducer(spells: list[int], operation: str) -> int:
-    funcs: dict[str, callable] = {
+    funcs: dict[str, Callable] = {
         "add": add,
         "multiply": mul,
         "max": max,
@@ -11,10 +12,12 @@ def spell_reducer(spells: list[int], operation: str) -> int:
     }
     if operation not in funcs:
         raise ValueError(f"Not a valid operation ({operation})")
+    if not spells:
+        return 0
     return reduce(funcs.get(operation), spells)
 
 
-def partial_enchanter(base_enchantment: callable) -> dict[str, callable]:
+def partial_enchanter(base_enchantment: Callable) -> dict[str, Callable]:
     return {
         "fire_enchant": partial(base_enchantment, element="fire", power=50),
         "ice_enchant": partial(base_enchantment, element="ice", power=50),
@@ -30,18 +33,18 @@ def memoized_fibonacci(n: int) -> int:
     return memoized_fibonacci(n - 1) + memoized_fibonacci(n - 2)
 
 
-def spell_dispatcher() -> callable:
+def spell_dispatcher() -> Callable:
     @singledispatch
     def dispatch(spell: any) -> str:
-        return f"Casting spell: {spell}"
+        return "Unknown spell type"
 
     @dispatch.register
     def _(spell: int) -> str:
-        return f"Dealing {spell} damage"
+        return f"Damage spell: {spell} damage"
 
     @dispatch.register
     def _(spell: str) -> str:
-        return f"Enchanting with {spell}"
+        return f"Enchantment: {spell}"
 
     @dispatch.register
     def _(spells: list) -> str:
@@ -52,7 +55,7 @@ def spell_dispatcher() -> callable:
 
 
 def main() -> None:
-    def base_enchantment(power: int, element: str, target: any) -> str:
+    def base_enchantment(power: int, element: str, target: str) -> str:
         return f"Enchanting {target} with {power} power and {element} element"
 
     print("Testing spell reducer...")
@@ -70,7 +73,7 @@ def main() -> None:
     except ValueError as e:
         print(e)
 
-    enchantments: dict[str, callable] = partial_enchanter(base_enchantment)
+    enchantments: dict[str, Callable] = partial_enchanter(base_enchantment)
     print("\nTesting partial enchanter...")
     for enchant in enchantments:
         print(f"Using {enchant}:", enchantments[enchant](target="Sword"))
@@ -78,12 +81,13 @@ def main() -> None:
     print("\nTesting memoized fibonacci...")
     print("Fib(10):", memoized_fibonacci(10))
     print("Fib(15):", memoized_fibonacci(15))
+    print(memoized_fibonacci.cache_info())
 
-    dispatcher: callable = spell_dispatcher()
+    dispatcher: Callable = spell_dispatcher()
     dispatching: list[any] = [
         4,
         "Double attack",
-        [10, "Holy light"]
+        [10, "Holy light", set()]
     ]
     print("\nTesting spell dispatcher...")
     for spell in dispatching:

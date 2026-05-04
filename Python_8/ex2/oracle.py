@@ -64,6 +64,9 @@ def main() -> None:
     print("[OK] Production overrides available")
 
     print("\nThe Oracle sees all configurations.")
+    print(os.environ)
+    print(os.getenv("testvariable"))
+    print(os.path)
 
 
 if __name__ == "__main__":
